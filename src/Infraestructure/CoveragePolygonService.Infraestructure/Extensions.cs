@@ -8,13 +8,13 @@ namespace CoveragePolygonService.Infraestructure
 {
     public static class Extensions
     {
-        private static readonly string CoveragePolygonConnectionString = "CoveragePolygon";
+        private static readonly string _coveragePolygonConnectionString = "CoveragePolygon";
         public static IServiceCollection AddInfraestructureServices(this IServiceCollection services)
         {
             IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
             services.AddDbContext<CoveragePolygonContext>(options => 
-                options.UseSqlServer(configuration.GetConnectionString(CoveragePolygonConnectionString)));
+                options.UseSqlServer(configuration.GetConnectionString(_coveragePolygonConnectionString)));
 
             return services;
         }
