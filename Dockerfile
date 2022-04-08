@@ -7,10 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["src/Boostrapers/CoveragePolygonService.Api/CoveragePolygonService.Api.csproj", "src/Boostrapers/CoveragePolygonService.Api/"]
-RUN dotnet restore "src/Boostrapers/CoveragePolygonService.Api/CoveragePolygonService.Api.csproj"
+COPY ["src/Boostrapers/CoveragePolygonService.Api/CoveragePolygonService.Api.csproj", "Boostrapers/CoveragePolygonService.Api/"]
+COPY ["src/Infraestructure/CoveragePolygonService.Infraestructure/CoveragePolygonService.Infraestructure.csproj", "Infraestructure/CoveragePolygonService.Infraestructure/"]
+COPY ["src/Core/CoveragePolygonService.Core/CoveragePolygonService.Core.csproj", "Core/CoveragePolygonService.Core/"]
+RUN dotnet restore "Boostrapers/CoveragePolygonService.Api/CoveragePolygonService.Api.csproj"
+
 COPY . .
-WORKDIR "/src/src/Boostrapers/CoveragePolygonService.Api"
+WORKDIR "src/Boostrapers/CoveragePolygonService.Api"
 RUN dotnet build "CoveragePolygonService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

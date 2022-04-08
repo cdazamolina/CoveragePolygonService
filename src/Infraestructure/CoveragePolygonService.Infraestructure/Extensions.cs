@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace CoveragePolygonService.Infraestructure
 {
@@ -13,7 +12,7 @@ namespace CoveragePolygonService.Infraestructure
         {
             IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
-            services.AddDbContext<CoveragePolygonContext>(options => 
+            services.AddDbContext<CoveragePolygonContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString(_coveragePolygonConnectionString)));
 
             return services;

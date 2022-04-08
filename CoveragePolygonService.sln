@@ -3,14 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoveragePolygonService.Api", "src\Boostrapers\CoveragePolygonService.Api\CoveragePolygonService.Api.csproj", "{6AE5C431-0671-4E10-A89C-CDE314CAB627}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoveragePolygonService.Api", "src\Boostrapers\CoveragePolygonService.Api\CoveragePolygonService.Api.csproj", "{6AE5C431-0671-4E10-A89C-CDE314CAB627}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoveragePolygonService.Core", "src\Core\CoveragePolygonService.Core\CoveragePolygonService.Core.csproj", "{708073DA-3E6B-4B56-B41C-059805B943D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoveragePolygonService.Core", "src\Core\CoveragePolygonService.Core\CoveragePolygonService.Core.csproj", "{708073DA-3E6B-4B56-B41C-059805B943D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoveragePolygonService.Infraestructure", "src\Infraestructure\CoveragePolygonService.Infraestructure\CoveragePolygonService.Infraestructure.csproj", "{638FFD8B-F6D1-4ED1-A908-ED29F051143A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoveragePolygonService.Infraestructure", "src\Infraestructure\CoveragePolygonService.Infraestructure\CoveragePolygonService.Infraestructure.csproj", "{638FFD8B-F6D1-4ED1-A908-ED29F051143A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C206A81E-A772-4DF8-A8F1-E5E2B72F2804}"
 	ProjectSection(SolutionItems) = preProject
+		Docker-Compose.yaml = Docker-Compose.yaml
+		Dockerfile = Dockerfile
 		README.md = README.md
 	EndProjectSection
 EndProject
