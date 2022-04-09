@@ -9,6 +9,5 @@ namespace CoveragePolygonService.Core.DTO
 
         [Required]
         public double Longitude { get; set; }
-
     }
 }

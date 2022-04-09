@@ -1,104 +1,112 @@
 using AutoMapper;
 using CoveragePolygonService;
+using CoveragePolygonService.Core.DTO;
+using CoveragePolygonService.Core.Exceptions;
+using CoveragePolygonService.Core.Interfaces;
 using CoveragePolygonService.Infraestructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Net;
 
 namespace CoveragePolygonService.Api.Controllers
 {
 
     public class PolygonController : ApiControllerBase
     {
-        private readonly CoveragePolygonContext _dbContext;
-        private readonly IMapper _mapper;
+        private readonly IRouteCoverageService _routeCoverageService;
+        private readonly ILogger<GeocodeController> _logger;
 
-        public PolygonController(CoveragePolygonContext dbContext, IMapper mapper)
+        public PolygonController(IRouteCoverageService routeCoverageService, ILogger<GeocodeController> logger)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _routeCoverageService = routeCoverageService ?? throw new ArgumentNullException(nameof(routeCoverageService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<RouteCoverage>>> Get()
         {
-            IEnumerable<Core.Entities.RouteCoverage> routesCoverageEntities = await _dbContext.RouteCoverages
-                .Include(x => x.Positions)
-                .ToListAsync();
-
-            IEnumerable<Core.DTO.RouteCoverage> routesCoverageDTO = _mapper
-                .Map<IEnumerable<Core.DTO.RouteCoverage>>(routesCoverageEntities);
-
-            return Ok(routesCoverageDTO);
+            _logger.LogInformation($"List all route coverages.");
+            return Ok(await _routeCoverageService.GetRouteCoveragesAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get([FromRoute] long id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GenericApiResult), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<RouteCoverage>> Get([FromRoute] long id)
         {
-            Core.Entities.RouteCoverage routeCoverageEntity = _dbContext.RouteCoverages
-                .Include(x => x.Positions)
-                .FirstOrDefault(x => x.Id == id);
-
-            if (routeCoverageEntity is null) return NotFound($"Route Coverage with Id {id} does not found!");
-
-            Core.DTO.RouteCoverage routeCoverageDTO = _mapper.Map<Core.DTO.RouteCoverage>(routeCoverageEntity);
-            return Ok(routeCoverageDTO);
+            try
+            {
+                _logger.LogInformation($"List route coverage with id [{id}].");
+                RouteCoverage routeCoverage = await _routeCoverageService.GetRouteCoverageAsync(id);
+                return Ok(routeCoverage);
+            }
+            catch (RouteCoverageDoesNotFoundException exception)
+            {
+                _logger.LogError(exception.Message);
+                return NotFound(new GenericApiResult(exception.Message));
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Core.DTO.RouteCoverage routeCoverageDTO)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GenericApiResult), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<RouteCoverage>> Post(RouteCoverage routeCoverage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Core.Entities.RouteCoverage routeCoverageEntity = _mapper
-                    .Map<Core.Entities.RouteCoverage>(routeCoverageDTO);
-                
-                _dbContext.RouteCoverages.Add(routeCoverageEntity);
-                 await _dbContext.SaveChangesAsync();
-
-                return Ok();
+                string errorMessage = "Model is not valid!";
+                _logger.LogError(errorMessage);
+                return BadRequest(new GenericApiResult(errorMessage));
             }
-            return BadRequest();
+
+            _logger.LogInformation($"Creating new route coverage [{routeCoverage.Name}].");
+            return Ok(await _routeCoverageService.CreateRouteCoverageAsync(routeCoverage));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] long id, Core.DTO.RouteCoverage routeCoverageDTO)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GenericApiResult), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(GenericApiResult), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<RouteCoverage>> Update([FromRoute] long id, RouteCoverage routeCoverage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-
-                Core.Entities.RouteCoverage currentRouteCoverageEntity = _dbContext.RouteCoverages
-                    .Include(x => x.Positions)
-                    .FirstOrDefault(x => x.Id == id);
-
-                if (currentRouteCoverageEntity is null)
-                    return NotFound($"Route Coverage with Id {id} does not found!");
-                
-                Core.Entities.RouteCoverage routeCoverageEntity = _mapper
-                    .Map<Core.Entities.RouteCoverage>(routeCoverageDTO);
-
-                currentRouteCoverageEntity.Name = routeCoverageEntity.Name;
-                currentRouteCoverageEntity.Description = routeCoverageEntity.Description;
-                currentRouteCoverageEntity.Positions = routeCoverageEntity.Positions;
-
-                _dbContext.RouteCoverages.Update(currentRouteCoverageEntity);
-                await _dbContext.SaveChangesAsync();
-                return Ok();
+                string errorMessage = "Model is not valid!";
+                _logger.LogError(errorMessage);
+                return BadRequest(new GenericApiResult(errorMessage));
             }
-            return BadRequest();
+
+            try
+            {
+                _logger.LogInformation($"Updating route coverage [{routeCoverage.Name}] with id [{id}].");
+                return Ok(await _routeCoverageService.UpdateRouteCoverageAsync(id, routeCoverage));
+            }
+            catch (RouteCoverageDoesNotFoundException exception)
+            {
+                _logger.LogError(exception.Message);
+                return NotFound(new GenericApiResult(exception.Message));
+            }
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GenericApiResult), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
-            Core.Entities.RouteCoverage routeCoverageEntity = _dbContext.RouteCoverages
-                .Include(x => x.Positions)
-                .FirstOrDefault(x => x.Id == id);
-
-            if (routeCoverageEntity is null) return NotFound($"Route Coverage with Id {id} does not found!");
-
-            _dbContext.RouteCoverages.Remove(routeCoverageEntity);
-            await _dbContext.SaveChangesAsync();
-            return Ok();
+            try
+            {
+                _logger.LogInformation($"Deleting route coverage with id [{id}].");
+                await _routeCoverageService.DeleteRouteCoverageAsync(id);
+                return Ok();
+            }
+            catch (RouteCoverageDoesNotFoundException exception)
+            {
+                _logger.LogError(exception.Message);
+                return NotFound(new GenericApiResult(exception.Message));
+            }
         }
     }
 }

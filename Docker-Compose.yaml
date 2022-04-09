@@ -1,7 +1,16 @@
 version: '3.1'
 
 services:
-
+  seqservice:
+    image: datalust/seq:latest
+    environment:
+     - SA_PASSWORD=Pass@word
+     - ACCEPT_EULA=Y
+    ports:
+     - "5341:5341"
+     - "8081:80"
+    volumes:
+     - ./logs/data:/data
   coveragepolygonservice:
     image: carlosdz97/coveragepolygon:latest
     ports: ["8080:80","1443:443"]
