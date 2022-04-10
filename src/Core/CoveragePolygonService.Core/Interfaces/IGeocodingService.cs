@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CoveragePolygonService.Core.Interfaces
 {
-    public interface IGeocode
+    public interface IGeocodingService
     {
-        public Task<RouteCoverage> GetRouteByAddress(IEnumerable<RouteCoverage> routeCoverages, string address);
+        public Task<RouteCoverage> GetRouteCoverageByAddress(string address);
     }
 }

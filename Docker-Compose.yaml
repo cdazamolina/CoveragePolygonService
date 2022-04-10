@@ -14,3 +14,6 @@ services:
   coveragepolygonservice:
     image: carlosdz97/coveragepolygon:latest
     ports: ["8080:80","1443:443"]
+  geocodingservice:
+    image: carlosdz97/geocoding:latest
+    ports: ["8082:80","1444:443"]

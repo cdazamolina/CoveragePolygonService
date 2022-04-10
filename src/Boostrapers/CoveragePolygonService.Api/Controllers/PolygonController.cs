@@ -16,9 +16,9 @@ namespace CoveragePolygonService.Api.Controllers
     public class PolygonController : ApiControllerBase
     {
         private readonly IRouteCoverageService _routeCoverageService;
-        private readonly ILogger<GeocodeController> _logger;
+        private readonly ILogger<PolygonController> _logger;
 
-        public PolygonController(IRouteCoverageService routeCoverageService, ILogger<GeocodeController> logger)
+        public PolygonController(IRouteCoverageService routeCoverageService, ILogger<PolygonController> logger)
         {
             _routeCoverageService = routeCoverageService ?? throw new ArgumentNullException(nameof(routeCoverageService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -1,7 +1,7 @@
 ﻿using CoveragePolygonService.Core.Interfaces;
 using CoveragePolygonService.Infraestructure.Contexts;
 using CoveragePolygonService.Infraestructure.Repositories;
-using CoveragePolygonService.Infraestructure.ThirdParties.Google;
+using CoveragePolygonService.Infraestructure.ThirdParty.GeocodingService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

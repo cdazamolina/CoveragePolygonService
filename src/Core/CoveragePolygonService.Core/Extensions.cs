@@ -15,7 +15,6 @@ namespace CoveragePolygonService.Core
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IRouteCoverageService, RouteCoverageService>();
-            services.AddScoped<IGeocodeService, GeocodeService>();
 
             IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
             services.AddLogging(loggingBuilder =>
@@ -30,6 +29,8 @@ namespace CoveragePolygonService.Core
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+
+            services.AddScoped<IGeocodingService, GeocodingService>();
             return services;
         }
     }
