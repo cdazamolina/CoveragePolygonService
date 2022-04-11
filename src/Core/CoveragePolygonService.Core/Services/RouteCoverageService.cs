@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using AutoMapper;
 using CoveragePolygonService.Core.DTO;
 using CoveragePolygonService.Core.Exceptions;
@@ -62,7 +58,8 @@ namespace CoveragePolygonService.Core.Services
             routeCoverageToUpdate.Name = routeCoverage.Name;
             routeCoverageToUpdate.Description = routeCoverage.Description;
             routeCoverageToUpdate.Positions = _mapper.Map<List<Entities.Geoposition>>(routeCoverage.Positions);
-            throw new NotImplementedException();
+            await _repository.UpdateAsync(routeCoverageToUpdate);
+            return _mapper.Map<RouteCoverage>(routeCoverageToUpdate);
         }
     }
 }
