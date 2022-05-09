@@ -40,7 +40,8 @@ namespace CoveragePolygonService.Infraestructure.ThirdParty.GeocodingService
                 return null;
             }
 
-            return JsonSerializer.Deserialize<RouteCoverage>(response.Content);
+            _logger.LogInformation($"Route assigned for address [{address}]: {response.Content}");
+            return JsonSerializer.Deserialize<RouteCoverage>(response.Content); ;
         }
     }
 }

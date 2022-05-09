@@ -2,6 +2,7 @@
 using CoveragePolygonService.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CoveragePolygonService.Api.Controllers
 {
