@@ -17,3 +17,16 @@ services:
   geocodingservice:
     image: carlosdz97/geocoding:latest
     ports: ["8082:80","1444:443"]
+  sql-server-db:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Pass@word"
+      ACCEPT_EULA: "Y"
+    volumes:
+     - sqldata:/var/opt/mssql
+volumes:
+  sqldata:
+    external: false

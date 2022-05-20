@@ -1,5 +1,7 @@
 using CoveragePolygonService.Core;
 using CoveragePolygonService.Infraestructure;
+using CoveragePolygonService.Infraestructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,10 @@ builder.Services.AddCoreServices();
 builder.Services.AddInfraestructureServices();
 
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<CoveragePolygonContext>();
+db.Database.Migrate();
 app.UseCors(builder => builder
      .WithOrigins("*")
      .AllowAnyMethod()
@@ -29,3 +35,4 @@ app.UseSwaggerUI();
 // app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
