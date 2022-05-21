@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coveragepolygon-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coveragepolygon-service
+  template:
+    metadata:
+      labels:
+        app: coveragepolygon-service
+    spec:
+      containers:
+      - image: gcr.io/august-creek-346600/coveragepolygon-service:latest
+        name: app
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coveragepolygon-service
+spec:
+  ports:
+  - name: http
+    port: 8080
+  selector:
+    app: coveragepolygon-service
