@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoveragePolygonService.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class HealthController : ControllerBase
     {
         [HttpGet("/")]
