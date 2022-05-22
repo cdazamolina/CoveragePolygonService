@@ -28,7 +28,7 @@ namespace CoveragePolygonService.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<RouteCoverage>>> Get()
         {
-            _logger.LogInformation($"List all route coverages.");
+            _logger.LogInformation($"Listing all route coverages.");
             return Ok(await _routeCoverageService.GetRouteCoveragesAsync());
         }
 
