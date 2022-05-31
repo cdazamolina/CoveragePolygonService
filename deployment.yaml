@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: coveragepolygon-service
 spec:
+  name: app
   replicas: 1
   selector:
     matchLabels:
