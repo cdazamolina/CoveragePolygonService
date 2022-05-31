@@ -1,3 +1,4 @@
+using CoveragePolygonService.Api;
 using CoveragePolygonService.Core;
 using CoveragePolygonService.Infraestructure;
 using CoveragePolygonService.Infraestructure.Contexts;
@@ -20,9 +21,6 @@ builder.Services.AddInfraestructureServices();
 
 var app = builder.Build();
 
-using var scope = app.Services.CreateScope();
-var db = scope.ServiceProvider.GetRequiredService<CoveragePolygonContext>();
-db.Database.Migrate();
 app.UseCors(builder => builder
      .WithOrigins("*")
      .AllowAnyMethod()
@@ -30,9 +28,6 @@ app.UseCors(builder => builder
      .AllowAnyHeader());
 app.UseSwagger();
 app.UseSwaggerUI();
-
-// app.UseHttpsRedirection();
-// app.UseAuthorization();
+app.ApplyMigrations();
 app.MapControllers();
 app.Run();
-

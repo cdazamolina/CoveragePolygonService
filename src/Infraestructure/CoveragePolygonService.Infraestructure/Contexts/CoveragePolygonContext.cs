@@ -8,6 +8,8 @@ namespace CoveragePolygonService.Infraestructure.Contexts
     {
         public DbSet<RouteCoverage> RouteCoverages { get; set; }
         public DbSet<Geoposition> Geopositions { get; set; }
+        public DbSet<HistoryOfRoute> HistoryOfRoutes { get; set; }
+
         public CoveragePolygonContext(DbContextOptions<CoveragePolygonContext> options) : base(options)
         {
 

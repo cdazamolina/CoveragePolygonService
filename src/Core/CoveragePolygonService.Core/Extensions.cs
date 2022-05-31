@@ -15,6 +15,7 @@ namespace CoveragePolygonService.Core
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IRouteCoverageService, RouteCoverageService>();
+            services.AddScoped<IHistoryOfRouteService, HistoryOfRouteService>();
 
             IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
             services.AddLogging(loggingBuilder =>

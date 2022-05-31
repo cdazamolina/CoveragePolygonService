@@ -18,6 +18,7 @@ namespace CoveragePolygonService.Infraestructure
                 .UseSqlServer(configuration.GetConnectionString(_coveragePolygonConnectionString)));
 
             services.AddScoped<IAsyncRepository<Core.Entities.RouteCoverage>, RouteCoverageRepository>();
+            services.AddScoped<IAsyncRepository<Core.Entities.HistoryOfRoute>, HistoryOfRouteRepository>();
             services.AddScoped<IGeocode, Geocode>();
             return services;
         }
