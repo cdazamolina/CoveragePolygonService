@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: coveragepolygon-service
 spec:
-  name: app
   replicas: 1
   selector:
     matchLabels:
@@ -28,7 +27,7 @@ metadata:
   name: coveragepolygon-service
 spec:
   ports:
-  - name: http
+    name: http
     port: 8080
   selector:
     app: coveragepolygon-service
