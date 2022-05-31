@@ -27,6 +27,7 @@ namespace CoveragePolygonService.Core
             {
                 mc.AddProfile(new RouteCoverageMappingProfile());
                 mc.AddProfile(new GeopositionMappingProfile());
+                mc.AddProfile(new HistoryOfRouteMappingProfile());
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
