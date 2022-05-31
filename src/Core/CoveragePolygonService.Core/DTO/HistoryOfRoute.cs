@@ -4,6 +4,11 @@ namespace CoveragePolygonService.Core.DTO
 {
     public class HistoryOfRoute
     {
+        public HistoryOfRoute()
+        {
+            DateTime = DateTime.Now;
+        }
+
         [Key]
         public long Id { get; set; }
 
@@ -14,5 +19,6 @@ namespace CoveragePolygonService.Core.DTO
         public string Address { get; set; }
 
         public string RouteName { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

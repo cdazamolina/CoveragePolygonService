@@ -14,5 +14,6 @@ namespace CoveragePolygonService.Core.Entities
         public string Address { get; set; }
 
         public string RouteName { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

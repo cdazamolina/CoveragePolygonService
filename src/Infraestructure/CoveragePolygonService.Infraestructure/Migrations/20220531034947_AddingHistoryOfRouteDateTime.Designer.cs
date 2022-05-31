@@ -4,6 +4,7 @@ using CoveragePolygonService.Infraestructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoveragePolygonService.Infraestructure.Migrations
 {
     [DbContext(typeof(CoveragePolygonContext))]
-    partial class CoveragePolygonContextModelSnapshot : ModelSnapshot
+    [Migration("20220531034947_AddingHistoryOfRouteDateTime")]
+    partial class AddingHistoryOfRouteDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
