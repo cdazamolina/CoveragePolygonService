@@ -27,7 +27,8 @@ metadata:
   name: coveragepolygon-service
 spec:
   ports:
-    name: http
+  - name: name-of-service-port
+    protocol: TCP
     port: 8080
   selector:
     app: coveragepolygon-service
