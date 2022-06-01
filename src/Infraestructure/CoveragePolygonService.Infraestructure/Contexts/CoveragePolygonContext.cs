@@ -19,6 +19,7 @@ namespace CoveragePolygonService.Infraestructure.Contexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.FillStartingRoutes();
         }
     }
 }
