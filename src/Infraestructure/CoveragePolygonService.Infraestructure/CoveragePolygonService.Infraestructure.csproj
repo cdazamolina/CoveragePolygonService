@@ -15,4 +15,10 @@
     <ProjectReference Include="..\..\Core\CoveragePolygonService.Core\CoveragePolygonService.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Contexts\StartingRoutes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
